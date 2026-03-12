@@ -1,4 +1,4 @@
-#include <Mux.h>
+#include <MuxControl.h>
 
 // 1. Create the Mux object
 Mux myMux; 
