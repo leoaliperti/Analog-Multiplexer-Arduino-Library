@@ -1,4 +1,4 @@
-# Mux Library for Arduino
+# MuxControl Library for Arduino
 
 A comprehensive, Object-Oriented Arduino library designed to easily control and read analog multiplexers (such as the popular CD74HC4067) and custom multi-multiplexer arrays.
 
@@ -56,7 +56,7 @@ The library uses a standard constructor and separate setup functions to safely i
   The primary function for reading a specific channel.
   * `channel`: The decimal number of the channel to read.
   * *Returns:* An integer representing the analog value (0-1023 on standard 10-bit ADCs).
-  * *Logic:* Calls `muxSelectChannel()`, halts execution for 7 microseconds to let the ADC capacitor charge and the signal stabilize, then triggers an `analogRead()`.
+  * *Logic:* Calls `muxSelectChannel()`, halts execution for 5 microseconds to let the ADC capacitor charge and the signal stabilize, then triggers an `analogRead()`.
 
 * **`void fullMuxAnalogRead(int muxChannels, int muxValue[])`**
   A batch-processing function that reads multiple channels and stores them in a provided array.
@@ -74,9 +74,10 @@ The library uses a standard constructor and separate setup functions to safely i
 ---
 
 ## 💻 Quick Start Example
+You can find the file to download in the examples folder.
 
 ```cpp
-#include <Mux.h>
+#include <MuxControl.h>
 
 // 1. Create the Mux object
 Mux myMux; 
