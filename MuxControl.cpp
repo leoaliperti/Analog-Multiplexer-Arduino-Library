@@ -5,7 +5,7 @@
 */
 
 #include "Arduino.h"
-#include "Mux.h"
+#include "MuxControl.h"
 
 Mux::Mux() {
 }
