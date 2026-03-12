@@ -34,7 +34,7 @@ void Mux::muxSelectChannel(int channel) {
 
 int Mux::muxAnalogRead(int channel) {
   muxSelectChannel(channel);
-  delayMicroseconds(7);
+  delayMicroseconds(5);
   return analogRead(_sigPin);
 }
 
