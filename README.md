@@ -10,7 +10,7 @@ To tell the multiplexer *which* channel to connect, we must send it a binary add
 
 
 
-This library abstracts all this binary math away. It takes a simple decimal number (like `5`), extracts the individual bits using Arduino's `bitRead()` function, and drives the corresponding selection pins. It also includes a crucial 7-microsecond stabilization delay before reading the analog value, ensuring clean and accurate data without cross-talk between channels.
+This library abstracts all this binary math away. It takes a simple decimal number (like `5`), extracts the individual bits using Arduino's `bitRead()` function, and drives the corresponding selection pins. It also includes a crucial 5-microsecond stabilization delay before reading the analog value, ensuring clean and accurate data without cross-talk between channels.
 
 ---
 
