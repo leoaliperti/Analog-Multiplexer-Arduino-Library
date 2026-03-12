@@ -1,0 +1,18 @@
+#######################################
+# Syntax Coloring Map For Mux
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1) - Si colorano di arancione scuro
+#######################################
+Mux	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2) - Si colorano di arancione chiaro
+#######################################
+setupMux	KEYWORD2
+muxSelectChannel	KEYWORD2
+muxAnalogRead	KEYWORD2
+fullMuxAnalogRead	KEYWORD2
+setupMultiMux	KEYWORD2
+multiMuxSelectChannel	KEYWORD2
