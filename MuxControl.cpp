@@ -12,7 +12,7 @@ Mux::Mux() {
 
 // --- FUNCTIONS FOR SINGLE MUX (4 PIN) ---
 
-void Mux::setupMux(int s0, int s1, int s2, int s3, int sigPin) {
+void Mux::setupMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t sigPin) {
   _s0 = s0;
   _s1 = s1;
   _s2 = s2;
@@ -25,28 +25,28 @@ void Mux::setupMux(int s0, int s1, int s2, int s3, int sigPin) {
   pinMode(_s3, OUTPUT);
 } 
 
-void Mux::muxSelectChannel(int channel) {
+void Mux::muxSelectChannel(uint8_t channel) {
   digitalWrite(_s0, bitRead(channel, 0));
   digitalWrite(_s1, bitRead(channel, 1));
   digitalWrite(_s2, bitRead(channel, 2));
   digitalWrite(_s3, bitRead(channel, 3));
 }
 
-int Mux::muxAnalogRead(int channel) {
+int Mux::muxAnalogRead(uint8_t channel) {
   muxSelectChannel(channel);
   delayMicroseconds(5);
   return analogRead(_sigPin);
 }
 
-void Mux::fullMuxAnalogRead(int muxChannels, int muxValue[]) {
-  for (int channel = 0; channel < muxChannels; channel++) {
+void Mux::fullMuxAnalogRead(uint8_t muxChannels, uint8_t muxValue[]) {
+  for (uint8_t channel = 0; channel < muxChannels; channel++) {
     muxValue[channel] = muxAnalogRead(channel);
   }
 }
 
 // --- FUNCTIONS FOR MULTI-MUX (8 PIN) ---
 
-void Mux::setupMultiMux(int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7, int sigPin) {
+void Mux::setupMultiMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t s4, uint8_t s5, uint8_t s6, uint8_t s7, uint8_t sigPin) {
   _s0 = s0;
   _s1 = s1;
   _s2 = s2;
@@ -67,7 +67,7 @@ void Mux::setupMultiMux(int s0, int s1, int s2, int s3, int s4, int s5, int s6, 
   pinMode(_s7, OUTPUT);
 } 
 
-void Mux::multiMuxSelectChannel(int channel) {
+void Mux::multiMuxSelectChannel(uint8_t channel) {
   digitalWrite(_s0, bitRead(channel, 0));
   digitalWrite(_s1, bitRead(channel, 1));
   digitalWrite(_s2, bitRead(channel, 2));

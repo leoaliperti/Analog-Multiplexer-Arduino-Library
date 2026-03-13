@@ -11,22 +11,22 @@
 
 class Mux {
   private:
-    int _s0, _s1, _s2, _s3;
-    int _s4, _s5, _s6, _s7;
-    int _sigPin;
+    uint8_t _s0, _s1, _s2, _s3;
+    uint8_t _s4, _s5, _s6, _s7;
+    uint8_t _sigPin;
 
   public:
     Mux();
 
     // --- FUNCTION FOR 4-PIN MUX ---
-    void setupMux(int s0, int s1, int s2, int s3, int sigPin);
-    void muxSelectChannel(int channel);
-    int muxAnalogRead(int channel);
-    void fullMuxAnalogRead(int muxChannels, int muxValue[]);
+    void setupMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t sigPin);
+    void muxSelectChannel(uint8_t channel);
+    int muxAnalogRead(uint8_t channel);
+    void fullMuxAnalogRead(uint8_t muxChannels, uint8_t muxValue[]);
 
     // --- FUNCTIONS FOR MULTI-MUX (8 PIN) ---
-    void setupMultiMux(int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7, int sigPin);
-    void multiMuxSelectChannel(int channel);
+    void setupMultiMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t s4, uint8_t s5, uint8_t s6, uint8_t s7, uint8_t sigPin);
+    void multiMuxSelectChannel(uint8_t channel);
 };
 
 #endif
