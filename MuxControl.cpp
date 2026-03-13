@@ -23,6 +23,7 @@ void Mux::setupMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t sigPi
   pinMode(_s1, OUTPUT);
   pinMode(_s2, OUTPUT);
   pinMode(_s3, OUTPUT);
+  pinMode(_sigPin, INPUT);
 } 
 
 void Mux::muxSelectChannel(uint8_t channel) {
