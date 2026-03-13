@@ -32,7 +32,7 @@ void Mux::muxSelectChannel(uint8_t channel) {
   digitalWrite(_s3, bitRead(channel, 3));
 }
 
-int Mux::muxAnalogRead(uint8_t channel) {
+uint16_t Mux::muxAnalogRead(uint8_t channel) {
   muxSelectChannel(channel);
   delayMicroseconds(5);
   return analogRead(_sigPin);
