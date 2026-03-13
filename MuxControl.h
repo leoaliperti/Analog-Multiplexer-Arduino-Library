@@ -21,7 +21,7 @@ class Mux {
     // --- FUNCTION FOR 4-PIN MUX ---
     void setupMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t sigPin);
     void muxSelectChannel(uint8_t channel);
-    int muxAnalogRead(uint8_t channel);
+    uint16_t muxAnalogRead(uint8_t channel);
     void fullMuxAnalogRead(uint8_t muxChannels, uint8_t muxValue[]);
 
     // --- FUNCTIONS FOR MULTI-MUX (8 PIN) ---
