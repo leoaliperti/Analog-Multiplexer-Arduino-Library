@@ -33,13 +33,13 @@ The library uses a standard constructor and separate setup functions to safely i
   The constructor. It creates the Mux object in your code's memory but does not configure the hardware yet. 
   *Usage:* `Mux myMux;`
 
-* **`void setupMux(int s0, int s1, int s2, int s3, int sigPin)`**
+* **`void setupMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t sigPin)`**
   Initializes a standard 4-pin multiplexer.
   * `s0`, `s1`, `s2`, `s3`: The Arduino digital pins connected to the multiplexer's selection pins.
   * `sigPin`: The Arduino analog pin connected to the multiplexer's common signal output.
   * *Logic:* Saves the pin numbers internally and sets S0-S3 as `OUTPUT`.
 
-* **`void setupMultiMux(int s0, int s1, int s2, int s3, int s4, int s5, int s6, int s7, int sigPin)`**
+* **`void setupMultiMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t s4, uint8_t s5, uint8_t s6, uint8_t s7, uint8_t sigPin)`**
   Initializes a custom 8-pin multi-multiplexer array.
   * `s0` to `s7`: The digital pins for the selection logic (e.g., S0-S3 for the back mux, S4-S7 for the front mux).
   * `sigPin`: The analog pin reading the final routed signal.
@@ -52,13 +52,13 @@ The library uses a standard constructor and separate setup functions to safely i
   * `channel`: The decimal number of the channel to select (0-15).
   * *Logic:* Uses `bitRead()` to extract the first 4 bits of the decimal number and writes them to the output pins.
 
-* **`int muxAnalogRead(int channel)`**
+* **`uint16_t muxAnalogRead(uint8_t channel)`**
   The primary function for reading a specific channel.
   * `channel`: The decimal number of the channel to read.
   * *Returns:* An integer representing the analog value (0-1023 on standard 10-bit ADCs).
   * *Logic:* Calls `muxSelectChannel()`, halts execution for 5 microseconds to let the ADC capacitor charge and the signal stabilize, then triggers an `analogRead()`.
 
-* **`void fullMuxAnalogRead(int muxChannels, int muxValue[])`**
+* **`void fullMuxAnalogRead(uint8_t muxChannels, uint8_t muxValue[])`**
   A batch-processing function that reads multiple channels and stores them in a provided array.
   * `muxChannels`: The total number of channels to iterate through.
   * `muxValue[]`: An array passed by reference where the readings will be stored.
@@ -66,7 +66,7 @@ The library uses a standard constructor and separate setup functions to safely i
 
 ### 3. Advanced 8-Pin Multi-Mux Functions
 
-* **`void multiMuxSelectChannel(int channel)`**
+* **`void multiMuxSelectChannel(uint8_t channel)`**
   Similar to the standard selection function, but handles 8 distinct bits for complex routing setups.
   * `channel`: The decimal representation of the routing path (up to 255).
   * *Logic:* Uses `bitRead()` to extract the first 8 bits of the integer and drives S0 through S7 accordingly. *(Note: To read analog values from an 8-pin setup, you will manually call this function followed by an `analogRead()` of your signal pin).*
