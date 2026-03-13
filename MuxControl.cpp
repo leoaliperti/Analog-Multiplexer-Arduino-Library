@@ -38,7 +38,7 @@ uint16_t Mux::muxAnalogRead(uint8_t channel) {
   return analogRead(_sigPin);
 }
 
-void Mux::fullMuxAnalogRead(uint8_t muxChannels, uint8_t muxValue[]) {
+void Mux::fullMuxAnalogRead(uint8_t muxChannels, uint16_t muxValue[]) {
   for (uint8_t channel = 0; channel < muxChannels; channel++) {
     muxValue[channel] = muxAnalogRead(channel);
   }
