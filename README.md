@@ -8,9 +8,7 @@ An analog multiplexer acts like a digital switchboard. It allows you to connect 
 
 To tell the multiplexer *which* channel to connect, we must send it a binary address using the selection pins (S0, S1, S2, etc.). For example, to read channel 5 (which is `0101` in binary), the library automatically pulls S0 High, S1 Low, S2 High, and S3 Low. 
 
-
-
-This library abstracts all this binary math away. It takes a simple decimal number (like `5`), extracts the individual bits using fast bitwise operations (right shift `>>` and bitwise AND `&`), and drives the corresponding selection pins. It also includes a crucial, customizable stabilization delay (set by default to 5 microseconds) before reading the analog value, ensuring clean and accurate data without cross-talk between channels. You can easily adjust this delay when instantiating the Mux object to suit your specific hardware needs.
+This library abstracts all this binary math away. It takes a simple decimal number (like `5`), extracts the individual bits using fast bitwise operations (right shift `>>` and bitwise AND `&`), and drives the corresponding selection pins. It also includes a crucial, customizable stabilization delay (set by default to 5 microseconds) and a **dummy read** before fetching the actual analog value. This ensures the ADC's Sample & Hold capacitor is fully stabilized, providing clean and accurate data without cross-talk between channels. You can easily adjust the delay when instantiating the Mux object to suit your specific hardware needs.
 
 ---
 
@@ -47,7 +45,7 @@ The library uses a standard constructor and separate setup functions to safely i
 
 ### 2. Standard 4-Pin Functions (Up to 16 Channels)
 
-* **`void muxSelectChannel(int channel)`**
+* **`void muxSelectChannel(uint8_t channel)`**
   Changes the physical state of the S0-S3 pins to route the requested channel to the signal pin.
   * `channel`: The decimal number of the channel to select (0-15).
   * *Logic:* Uses fast bitwise operations (right shift `>>` and bitwise AND `&`) to extract the first 4 bits of the decimal number and writes them to the output pins.
@@ -56,20 +54,31 @@ The library uses a standard constructor and separate setup functions to safely i
   The primary function for reading a specific channel.
   * `channel`: The decimal number of the channel to read.
   * *Returns:* An integer representing the analog value (0-1023 on standard 10-bit ADCs).
-  * *Logic:* Calls `muxSelectChannel()`, halts execution by default 5 microseconds, or the delayTime value to let the ADC capacitor charge and the signal stabilize, then triggers an `analogRead()`.
+  * *Logic:* Calls `muxSelectChannel()`, halts execution by the defined `delayTime` (default 5µs), performs a "dummy read" to let the ADC capacitor stabilize, and then triggers the final `analogRead()`.
 
-* **`void fullMuxAnalogRead(uint8_t muxChannels, uint8_t muxValue[])`**
+* **`void fullMuxAnalogRead(uint8_t muxChannels, uint16_t muxValue[])`**
   A batch-processing function that reads multiple channels and stores them in a provided array.
   * `muxChannels`: The total number of channels to iterate through.
-  * `muxValue[]`: An array passed by reference where the readings will be stored.
+  * `muxValue[]`: A 16-bit integer array passed by reference where the readings will be stored.
   * *Logic:* Runs a standard `for` loop from 0 to `muxChannels - 1`, calling `muxAnalogRead()` for each step and populating the array.
 
 ### 3. Advanced 8-Pin Multi-Mux Functions
 
-* **`void multiMuxSelectChannel(uint8_t channel)`**
+* **`void multiMuxSelectChannel(uint16_t channel)`**
   Similar to the standard selection function, but handles 8 distinct bits for complex routing setups.
-  * `channel`: The decimal representation of the routing path (up to 255).
-  * *Logic:* Uses `bitRead()` to extract the first 8 bits of the integer and drives S0 through S7 accordingly. *(Note: To read analog values from an 8-pin setup, you will manually call this function followed by an `analogRead()` of your signal pin).*
+  * `channel`: The decimal representation of the routing path.
+  * *Logic:* Uses fast bitwise operations (right shift `>>` and bitwise AND `&`) to extract the first 8 bits of the integer and drives S0 through S7 accordingly.
+
+* **`uint16_t multiMuxAnalogRead(uint16_t channel)`**
+  Reads a specific channel on an 8-pin multi-mux setup.
+  * `channel`: The decimal number of the channel to read.
+  * *Returns:* An integer representing the analog value.
+  * *Logic:* Calls `multiMuxSelectChannel()`, applies the stabilization delay, performs a dummy read, and returns the actual `analogRead()`.
+
+* **`void fullMultiMuxAnalogRead(uint16_t muxChannels, uint16_t muxValue[])`**
+  Batch-processes multiple channels on an 8-pin setup.
+  * `muxChannels`: The total number of channels to iterate through.
+  * `muxValue[]`: A 16-bit integer array to store the readings.
 
 ---
 
@@ -82,8 +91,8 @@ You can find the file to download in the examples folder.
 // 1. Create the Mux object
 Mux myMux; 
 
-// 2. Prepare an array for 16 channels
-int myReadings[16]; 
+// 2. Prepare an array for 16 channels (using uint16_t for compatibility)
+uint16_t myReadings[16]; 
 
 void setup() {
   Serial.begin(9600);
