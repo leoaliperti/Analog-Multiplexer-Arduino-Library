@@ -16,3 +16,5 @@ muxAnalogRead	KEYWORD2
 fullMuxAnalogRead	KEYWORD2
 setupMultiMux	KEYWORD2
 multiMuxSelectChannel	KEYWORD2
+multiMuxAnalogRead  KEYWORD2
+fullMultiMuxAnalogRead  KEYWORD2
