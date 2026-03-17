@@ -10,7 +10,7 @@ To tell the multiplexer *which* channel to connect, we must send it a binary add
 
 
 
-This library abstracts all this binary math away. It takes a simple decimal number (like `5`), extracts the individual bits using fast bitwise operations (right shift `>>` and bitwise AND `&`), and drives the corresponding selection pins. It also includes a crucial, customizable stabilization delay (defaulting to 5 microseconds) before reading the analog value, ensuring clean and accurate data without cross-talk between channels. You can easily adjust this delay when instantiating the Mux object to suit your specific hardware needs.
+This library abstracts all this binary math away. It takes a simple decimal number (like `5`), extracts the individual bits using fast bitwise operations (right shift `>>` and bitwise AND `&`), and drives the corresponding selection pins. It also includes a crucial, customizable stabilization delay (set by default to 5 microseconds) before reading the analog value, ensuring clean and accurate data without cross-talk between channels. You can easily adjust this delay when instantiating the Mux object to suit your specific hardware needs.
 
 ---
 
