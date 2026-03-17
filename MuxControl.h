@@ -17,7 +17,6 @@ class Mux {
     uint32_t _delayTime;
 
   public:
-    Mux();
     // --- SETUP ---
     Mux(uint32_t delayTime = 5);
 
@@ -29,7 +28,9 @@ class Mux {
 
     // --- FUNCTIONS FOR MULTI-MUX (8 PIN) ---
     void setupMultiMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t s4, uint8_t s5, uint8_t s6, uint8_t s7, uint8_t sigPin);
-    void multiMuxSelectChannel(uint8_t channel);
+    void multiMuxSelectChannel(uint16_t channel);
+    uint16_t multiMuxAnalogRead(uint16_t channel); 
+    void fullMultiMuxAnalogRead(uint16_t muxChannels, uint16_t muxValue[]);
 };
 
 #endif
