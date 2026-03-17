@@ -10,14 +10,14 @@ To tell the multiplexer *which* channel to connect, we must send it a binary add
 
 
 
-This library abstracts all this binary math away. It takes a simple decimal number (like `5`), extracts the individual bits using Arduino's `bitRead()` function, and drives the corresponding selection pins. It also includes a crucial 5-microsecond stabilization delay before reading the analog value, ensuring clean and accurate data without cross-talk between channels.
+This library abstracts all this binary math away. It takes a simple decimal number (like `5`), extracts the individual bits using fast bitwise operations (right shift `>>` and bitwise AND `&`), and drives the corresponding selection pins. It also includes a crucial, customizable stabilization delay (defaulting to 5 microseconds) before reading the analog value, ensuring clean and accurate data without cross-talk between channels. You can easily adjust this delay when instantiating the Mux object to suit your specific hardware needs.
 
 ---
 
 ## 🚀 Features
 
 * **Object-Oriented Design:** Instantiate multiple `Mux` objects to control entirely independent multiplexer circuits within the same sketch.
-* **Standard 4-Pin Mode:** Seamlessly control standard 16-channel multiplexers using 4 selection pins.
+* **Standard 4-Pin Mode:** Seamlessly control standard 16-channel multiplexers using 4 selection pins (tested with CD74HC4067).
 * **Custom 8-Pin Multi-Mux Mode:** Control advanced, cascaded, or dual multiplexer setups requiring up to 8 selection pins.
 * **Automatic Array Population:** Read all channels sequentially and store them directly into an array with a single line of code.
 * **Hardware-Safe Initialization:** Uses a standard `setup()` methodology rather than doing hardware configurations inside the constructor, preventing early-boot crashes on AVR chips.
