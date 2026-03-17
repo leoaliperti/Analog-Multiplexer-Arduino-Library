@@ -1,7 +1,8 @@
 /*
     mux.h - Library for managing a multiplexer (MUX) with Arduino.
     This library allows you to select channels on a 4- or 8-pin multiplexer and read analog values from those channels.
-    Developed by Leonardo Aliperti - March 12, 2026
+    Created by Leonardo Aliperti - March 12, 2026
+    Last edited by Leonardo Aliperti - March 17, 2026
 */
 
 #include "Arduino.h"
@@ -28,10 +29,10 @@ void Mux::setupMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t sigPi
 } 
 
 void Mux::muxSelectChannel(uint8_t channel) {
-  digitalWrite(_s0, bitRead(channel, 0));
-  digitalWrite(_s1, bitRead(channel, 1));
-  digitalWrite(_s2, bitRead(channel, 2));
-  digitalWrite(_s3, bitRead(channel, 3));
+  digitalWrite(_s0, (channel >> 0) & 1); 
+  digitalWrite(_s1, (channel >> 1) & 1);
+  digitalWrite(_s2, (channel >> 2) & 1);
+  digitalWrite(_s3, (channel >> 3) & 1);
 }
 
 uint16_t Mux::muxAnalogRead(uint8_t channel) {
