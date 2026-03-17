@@ -56,7 +56,7 @@ The library uses a standard constructor and separate setup functions to safely i
   The primary function for reading a specific channel.
   * `channel`: The decimal number of the channel to read.
   * *Returns:* An integer representing the analog value (0-1023 on standard 10-bit ADCs).
-  * *Logic:* Calls `muxSelectChannel()`, halts execution for 5 microseconds to let the ADC capacitor charge and the signal stabilize, then triggers an `analogRead()`.
+  * *Logic:* Calls `muxSelectChannel()`, halts execution by default 5 microseconds, or the delayTime value to let the ADC capacitor charge and the signal stabilize, then triggers an `analogRead()`.
 
 * **`void fullMuxAnalogRead(uint8_t muxChannels, uint8_t muxValue[])`**
   A batch-processing function that reads multiple channels and stores them in a provided array.
