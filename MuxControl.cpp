@@ -7,7 +7,8 @@
 #include "Arduino.h"
 #include "MuxControl.h"
 
-Mux::Mux() {
+Mux::Mux(uint32_t delayTime) {
+  _delayTime = delayTime;
 }
 
 // --- FUNCTIONS FOR SINGLE MUX (4 PIN) ---
@@ -35,7 +36,7 @@ void Mux::muxSelectChannel(uint8_t channel) {
 
 uint16_t Mux::muxAnalogRead(uint8_t channel) {
   muxSelectChannel(channel);
-  delayMicroseconds(5);
+  delayMicroseconds(_delayTime);
   analogRead(_sigPin); // Dummy read to allow the ADC's Sample & Hold capacitor to stabilize.
   return analogRead(_sigPin);
 }

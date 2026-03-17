@@ -14,9 +14,12 @@ class Mux {
     uint8_t _s0, _s1, _s2, _s3;
     uint8_t _s4, _s5, _s6, _s7;
     uint8_t _sigPin;
+    uint32_t _delayTime;
 
   public:
     Mux();
+    // --- SETUP ---
+    Mux(uint32_t delayTime = 5);
 
     // --- FUNCTION FOR 4-PIN MUX ---
     void setupMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t sigPin);
