@@ -69,15 +69,29 @@ void Mux::setupMultiMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t 
   pinMode(_s5, OUTPUT);
   pinMode(_s6, OUTPUT);
   pinMode(_s7, OUTPUT);
+  pinMode(_sigPin, INPUT);
 } 
 
-void Mux::multiMuxSelectChannel(uint8_t channel) {
-  digitalWrite(_s0, bitRead(channel, 0));
-  digitalWrite(_s1, bitRead(channel, 1));
-  digitalWrite(_s2, bitRead(channel, 2));
-  digitalWrite(_s3, bitRead(channel, 3));
-  digitalWrite(_s4, bitRead(channel, 4));
-  digitalWrite(_s5, bitRead(channel, 5));
-  digitalWrite(_s6, bitRead(channel, 6));
-  digitalWrite(_s7, bitRead(channel, 7));
+void Mux::multiMuxSelectChannel(uint16_t channel) {
+  digitalWrite(_s0, (channel >> 0) & 1); 
+  digitalWrite(_s1, (channel >> 1) & 1);
+  digitalWrite(_s2, (channel >> 2) & 1);
+  digitalWrite(_s3, (channel >> 3) & 1);
+  digitalWrite(_s4, (channel >> 4) & 1);
+  digitalWrite(_s5, (channel >> 5) & 1);
+  digitalWrite(_s6, (channel >> 6) & 1);
+  digitalWrite(_s7, (channel >> 7) & 1);
+}
+
+uint16_t Mux::multiMuxAnalogRead(uint16_t channel) {
+  multiMuxSelectChannel(channel); //Use the multiMuxSelectChannel function to set the channel on the 8-pin MUX.
+  delayMicroseconds(_delayTime);
+  analogRead(_sigPin); // Dummy read to allow the ADC's Sample & Hold capacitor to stabilize.
+  return analogRead(_sigPin);
+}
+
+void Mux::fullMultiMuxAnalogRead(uint16_t muxChannels, uint16_t muxValue[]) {
+  for (uint16_t channel = 0; channel < muxChannels; channel++) {
+    muxValue[channel] = multiMuxAnalogRead(channel);
+  }
 }
