@@ -29,9 +29,9 @@ This library abstracts all this binary math away. It takes a simple decimal numb
 ### 1. Initialization
 The library uses a standard constructor and separate setup functions to safely initialize the pins.
 
-* **`Mux()`**
+* **`Mux(uint32_t delayTime = 5)`**
   The constructor. It creates the Mux object in your code's memory but does not configure the hardware yet. 
-  *Usage:* `Mux myMux;`
+  * *Usage:* `Mux myMux;` (uses the default 5µs delay) or `Mux myMux(10);` (sets a custom 10µs delay).
 
 * **`void setupMux(uint8_t s0, uint8_t s1, uint8_t s2, uint8_t s3, uint8_t sigPin)`**
   Initializes a standard 4-pin multiplexer.
@@ -50,7 +50,7 @@ The library uses a standard constructor and separate setup functions to safely i
 * **`void muxSelectChannel(int channel)`**
   Changes the physical state of the S0-S3 pins to route the requested channel to the signal pin.
   * `channel`: The decimal number of the channel to select (0-15).
-  * *Logic:* Uses `bitRead()` to extract the first 4 bits of the decimal number and writes them to the output pins.
+  * *Logic:* Uses fast bitwise operations (right shift `>>` and bitwise AND `&`) to extract the first 4 bits of the decimal number and writes them to the output pins.
 
 * **`uint16_t muxAnalogRead(uint8_t channel)`**
   The primary function for reading a specific channel.
